@@ -1,0 +1,6 @@
+# This file contains expected stems for some common words
+# The stems in generated_stems.dict will be override by stems in this file
+
+neden	neden
+ana	ana
+aba	aba

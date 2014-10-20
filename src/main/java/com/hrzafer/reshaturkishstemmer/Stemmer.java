@@ -15,8 +15,8 @@ public interface Stemmer
     public abstract String stem(String token);
 
     /**
+     * WARNING: This method is not implemented yet and throws UnsupportedOperationException
      * Finds the most possible stem of the word according to the words before and/or after the word.
-     * WARNING: Some implementations of the Stemmer interface may not support this method and throws
      * UnsupportedOperationException.
      * @param tokens series of words including the word to be stemmed
      * @param index index of the word to be stemmed in the list

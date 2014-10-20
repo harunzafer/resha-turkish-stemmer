@@ -11,12 +11,10 @@ import java.util.Map;
 public enum Resha implements Stemmer {
 
     Instance;
-
-    private final String stemsPath = "/nuve_stems.dict";
     private final Map<String, String> map;
 
     private Resha() {
-        map = StemDictReader.read(stemsPath);
+        map = StemDictionaryReader.GetMap();
     }
 
     @Override
