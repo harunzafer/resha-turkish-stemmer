@@ -4,7 +4,7 @@
 
   <groupId>com.hrzafer</groupId>
   <artifactId>resha-turkish-stemmer</artifactId>
-  <version>1.1.0</version>
+  <version>1.1.1</version>
   <packaging>jar</packaging>
 
   <name>resha-turkish-stemmer</name>
@@ -14,6 +14,17 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
+
+  <distributionManagement>
+    <repository>
+      <id>repo</id>
+      <url>file:///C:\Users\hrzafer\Desktop\mvn-repo\releases</url>
+    </repository>
+    <snapshotRepository>
+      <id>repo-snapshots</id>
+      <url>file://C:\Users\hrzafer\Desktop\mvn-repo\snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
 
   <dependencies>
    <dependency>
