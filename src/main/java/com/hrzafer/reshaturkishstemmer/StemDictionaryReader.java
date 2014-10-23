@@ -30,6 +30,7 @@ public class StemDictionaryReader {
         InputStream is = StemDictionaryReader.class.getResourceAsStream(path);
         Scanner scanner = new Scanner(is, "UTF-8");
         Map<String, String> map = new TreeMap<String, String>();
+        StemCache cache = new StemCache(3);
 
         int lineNum = 0;
         while (scanner.hasNextLine()) {
@@ -39,10 +40,20 @@ public class StemDictionaryReader {
 
             if (!line.isEmpty() && line.charAt(0) != '#') {
                 try {
-
                     String[] columns = line.split("\t");
-                    if (map.put(columns[0], columns[1]) != null) {
-                        System.out.println("Warning: Duplicate enrty in the stem dictionary: " + columns[0]);
+                    if (columns[0].equals("kitapçıdaki")) {
+                        System.out.println();
+                    }
+                    int index = cache.indexOf(columns[1]);
+
+                    if (index > -1) {
+                        map.put(columns[0], cache.get(index));
+                    } else {
+                        String s = map.put(columns[0], columns[1]);
+                        if (s != null) {
+                            System.out.println("Warning: Duplicate enrty in the stem dictionary: " + columns[0]);
+                        }
+                        cache.put(columns[1]);
                     }
 
                 } catch (ArrayIndexOutOfBoundsException e) {
@@ -53,4 +64,6 @@ public class StemDictionaryReader {
         }
         return map;
     }
+
+
 }
