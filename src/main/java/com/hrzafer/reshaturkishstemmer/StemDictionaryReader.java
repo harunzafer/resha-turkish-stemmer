@@ -1,9 +1,12 @@
 package com.hrzafer.reshaturkishstemmer;
 
-import java.io.InputStream;
+import java.net.URL;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
-import java.util.TreeMap;
 
 /**
  * Reads a stem dictionary into a Map(string, string)
@@ -16,54 +19,44 @@ public class StemDictionaryReader {
 
     public static Map<String, String> GetMap() {
 
-        Map<String, String> generatedStems = Read(generated);
+        Map<String, String> generatedStems = ReadFaster(generated);
 
-        Map<String, String> manualStems = Read(manual);
+        Map<String, String> manualStems = ReadFaster(manual);
 
         generatedStems.putAll(manualStems);
 
         return generatedStems;
     }
 
-    public static Map<String, String> Read(String path) {
+    public static Map<String, String> ReadFaster(String path) {
 
-        InputStream is = StemDictionaryReader.class.getResourceAsStream(path);
-        Scanner scanner = new Scanner(is, "UTF-8");
-        Map<String, String> map = new TreeMap<String, String>();
-        StemCache cache = new StemCache(3);
+        Map<String, String> map = new HashMap<String, String>();
 
-        int lineNum = 0;
-        while (scanner.hasNextLine()) {
+        try {
 
-            lineNum++;
-            String line = scanner.nextLine();
+            URL url = StemDictionaryReader.class.getResource(path);
 
-            if (!line.isEmpty() && line.charAt(0) != '#') {
-                try {
+            List<String> lines = Files.readAllLines(Paths.get(url.toURI()), Charset.forName("UTF-8"));
+
+            for (String line : lines) {
+
+                if (!line.isEmpty() && line.charAt(0) != '#') {
+
                     String[] columns = line.split("\t");
-                    if (columns[0].equals("kitapçıdaki")) {
-                        System.out.println();
-                    }
-                    int index = cache.indexOf(columns[1]);
 
-                    if (index > -1) {
-                        map.put(columns[0], cache.get(index));
-                    } else {
-                        String s = map.put(columns[0], columns[1]);
-                        if (s != null) {
-                            System.out.println("Warning: Duplicate enrty in the stem dictionary: " + columns[0]);
-                        }
-                        cache.put(columns[1]);
+                    String s = map.put(columns[0], columns[1].intern());
+
+                    if (s != null) {
+                        System.out.println("Warning: Duplicate enrty in the stem dictionary: " + columns[0]);
                     }
 
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    System.out.println("Error at line " + lineNum + " in the stem dictionary.");
                 }
-
             }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
         return map;
     }
-
-
 }
