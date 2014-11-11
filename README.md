@@ -5,7 +5,7 @@ Resha is a fast and "less aggressive" stemmer for Turkish written in Java. It us
 ####Main Features
 - Less aggressive and more accurate than the other stemmers for available for Turkish such as the one in [SnowBall](http://snowball.tartarus.org/algorithms/turkish/stemmer.html)
 - Contains more than 1.1 million word-stem pairs
-- Based on HashMap, very fast but uses approximately 800 MB of memory.
+- Based on HashMap, very fast but uses approximately 350 MB of memory.
 - The stemmer class is singleton, thread safe, and lazy initialized
 
 ####Usage
@@ -71,7 +71,7 @@ Pay attention to the derivational suffix "lik" which becomes "liğ" if a suffix 
 
 Nuve is an NLP library that can perform such complex morphologic analysis (and more) which is required for many tasks like stemming. This complex analysis could be expensive for applications in which there are millions of words to be stemmed.
 
-Resha stemmer is a Turkish stemmer based on a dictionary which consists of already stemmed words by Nüve. The dictionary includes more than 1.1 million word-stem pairs. 
+Resha stemmer is a Turkish stemmer based on a dictionary which consists of already stemmed words by Nuve. The dictionary includes more than 1.1 million word-stem pairs. 
 
 
 
