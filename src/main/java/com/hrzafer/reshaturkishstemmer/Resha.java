@@ -22,10 +22,10 @@ public enum Resha implements Stemmer {
 
         int apostropheIndex = token.indexOf("\'");
 
-        if (apostropheIndex > -1){
+        if (apostropheIndex > -1) {
             return token.substring(0, apostropheIndex);
         }
-        if (map.containsKey(token)){
+        if (map.containsKey(token)) {
             return map.get(token);
         }
 

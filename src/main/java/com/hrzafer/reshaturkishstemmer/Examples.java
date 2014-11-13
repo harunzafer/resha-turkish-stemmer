@@ -1,17 +1,16 @@
 package com.hrzafer.reshaturkishstemmer;
 
 /**
- * See unit tests for more examples
+ * See unit tests (ReshaStemmerTest.java) for more examples
  */
 public class Examples {
     public static void main(String[] args) throws InterruptedException {
+
         System.out.println("hello");
         Stemmer stemmer = Resha.Instance;
+
         System.out.println(stemmer.stem("kitapçıdaki"));
         System.out.println(stemmer.stem("neden"));
-//        System.out.println("sleeping");
-//        Thread.sleep(10000);
-
     }
 
 

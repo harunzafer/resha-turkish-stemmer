@@ -1,11 +1,11 @@
 package com.hrzafer.reshaturkishstemmer;
 
-import java.net.URL;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -19,26 +19,28 @@ public class StemDictionaryReader {
 
     public static Map<String, String> GetMap() {
 
-        Map<String, String> generatedStems = ReadFaster(generated);
+        Map<String, String> generatedStems = Read2(generated);
 
-        Map<String, String> manualStems = ReadFaster(manual);
+        Map<String, String> manualStems = Read2(manual);
 
         generatedStems.putAll(manualStems);
 
         return generatedStems;
     }
 
-    public static Map<String, String> ReadFaster(String path) {
+    public static Map<String, String> Read2(String path) {
 
-        Map<String, String> map = new HashMap<String, String>();
-
+        //Get file from resources folder
+        Map<String, String> map = new HashMap<>();
         try {
 
-            URL url = StemDictionaryReader.class.getResource(path);
+            InputStream in = StemDictionaryReader.class.getResourceAsStream(path);
 
-            List<String> lines = Files.readAllLines(Paths.get(url.toURI()), Charset.forName("UTF-8"));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in, Charset.forName("UTF-8")));
 
-            for (String line : lines) {
+            String line;
+
+            while ((line = reader.readLine()) != null) {
 
                 if (!line.isEmpty() && line.charAt(0) != '#') {
 
@@ -49,14 +51,14 @@ public class StemDictionaryReader {
                     if (s != null) {
                         System.out.println("Warning: Duplicate enrty in the stem dictionary: " + columns[0]);
                     }
-
                 }
             }
 
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
-
         return map;
+
     }
+
 }

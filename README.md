@@ -5,7 +5,7 @@ Resha is a fast and "less aggressive" stemmer for Turkish written in Java. It us
 ####Main Features
 - Less aggressive and more accurate than the other stemmers for available for Turkish such as the one in [SnowBall](http://snowball.tartarus.org/algorithms/turkish/stemmer.html)
 - Contains more than 1.1 million word-stem pairs
-- Based on HashMap, very fast but uses approximately 350 MB of memory.
+- Based on HashMap, very fast but uses approximately 300 MB of memory.
 - The stemmer class is singleton, thread safe, and lazy initialized
 
 ####Usage
@@ -47,7 +47,7 @@ And the dependency
         <dependency>
                 <groupId>com.hrzafer</groupId>
                 <artifactId>resha-turkish-stemmer</artifactId>
-                <version>1.1.1</version>
+                <version>1.2.0</version>
             </dependency>
     </dependencies>
 
