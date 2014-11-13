@@ -47,7 +47,7 @@ And the dependency
         <dependency>
                 <groupId>com.hrzafer</groupId>
                 <artifactId>resha-turkish-stemmer</artifactId>
-                <version>1.2.0</version>
+                <version>1.2.1</version>
             </dependency>
     </dependencies>
 
