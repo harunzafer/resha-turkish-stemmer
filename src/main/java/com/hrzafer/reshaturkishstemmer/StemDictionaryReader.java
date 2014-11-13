@@ -19,16 +19,16 @@ public class StemDictionaryReader {
 
     public static Map<String, String> GetMap() {
 
-        Map<String, String> generatedStems = Read2(generated);
+        Map<String, String> generatedStems = Read(generated);
 
-        Map<String, String> manualStems = Read2(manual);
+        Map<String, String> manualStems = Read(manual);
 
         generatedStems.putAll(manualStems);
 
         return generatedStems;
     }
 
-    public static Map<String, String> Read2(String path) {
+    private static Map<String, String> Read(String path) {
 
         //Get file from resources folder
         Map<String, String> map = new HashMap<>();
