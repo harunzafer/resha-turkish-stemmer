@@ -60,18 +60,29 @@ https://github.com/hrzafer/mvn-repo/tree/master/releases/com/hrzafer/resha-turki
 
 This part presents a brief introduction to the stemming problem in Turkish and the methodology used to solve it.
 
-In Turkish words are composed of three parts. Root, derivational suffix(es), and inflectional suffix(es)
+In Turkish words are composed of three consecutive parts:
 
-Example:
+    root + derivational suffix(es) + inflectional suffix(es)
 
-word: kitapçıdaki => kitap (root) + çı (der.sfx) + da (inf. sfx) + ki (inf. sfx)
-abonelik (stemmed)
+Prefixes don't exist and no derivational suffix come after an inflectional suffix. Example:
 
-Pay attention to the derivational suffix "lik" which becomes "liğ" if a suffix starting with a vowel comes after it. A stemmer must both detect the inflectional suffixes and convert "liğ" to "lik" after removing the inf. suffixes.
+    kitapçığında  => kitap + çığ [CUK] + ın [(U)n] + da [DA]
+    word          => root  + d. sfx    + i. sfx    + i.sfx
 
-Nuve is an NLP library that can perform such complex morphologic analysis (and more) which is required for many tasks like stemming. This complex analysis could be expensive for applications in which there are millions of words to be stemmed.
+A stemmer is expected to analyze the word and strip off the inflectional suffixes from the word. So the expected stem for `kitapçığında` is `kitapçık`. However such a morphological analysis is not trivial for Turkish. Let pay attention to the only derivative suffix shown above and try to understand the difficulties of the issue.
+
+The inflectional suffic `+CUK` is somehow similar to the `let` suffix in English. The word `kitapçık` means `booklet`.  `+CUK` suffix takes different forms according to the morphemes coming before and after it. In Turkish all the following forms are possible for the `+CUK` suffix:
+
+    cık, cik, cuk, cük, çık, çik, çuk, çük, cığ, ciğ, cuğ, cüğ, çığ, çiğ, çuğ, çüğ, 
+
+In the word `kitapçık` the suffix is in `çık` form. If the root was `kalem` (pencil) then the word would be `kalemcik` and the suffix would be in `cik` form. When a new suffix, `+(U)n` is added, `+CUK` suffix changes its form from `çık` to `çığ`. 
+
+After stripping off the inflectional suffixes from the word `kitapçığındaki` the stem becomes `kitapçığ`. However the it should be `kitapçık`. Thus a stemmer/analyzer for Turkish should handle many character conversions in Turkish. 
+
+[Nuve](https://github.com/hrzafer/nuve) is an NLP library that can perform such complex morphologic analysis (and more) which is required for many tasks like stemming. This complex analysis could be expensive for applications in which there are millions of words to be stemmed.
 
 Resha stemmer is a Turkish stemmer based on a dictionary which consists of already stemmed words by Nuve. The dictionary includes more than 1.1 million word-stem pairs. 
 
+#### How to add new stems or overwrite existing stems
 
-
+It is highly probable that the 1.1 million word-stem pair dictionary does not include stems for some words or you may find some stems are not correct. In this case you can add your own word-stem pairs by editing `manual.dict` file. The word-stem (key-value) pairs will be added to the dictionary and if the word (key) already exists the stem (value) for it will be overwritten.
